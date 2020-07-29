@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 public class Workout {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String day;
   private String exercise;
   private String repetitions;
+  private Integer weight;
 
   @ManyToOne
   private User user;
@@ -22,11 +23,12 @@ public class Workout {
   public Workout() {
   }
 
-  public Workout(String day, String exercise, String repetitions,
+  public Workout(String day, String exercise, String repetitions, Integer weight,
       User user) {
     this.day = day;
     this.exercise = exercise;
     this.repetitions = repetitions;
+    this.weight = weight;
     this.user = user;
   }
 
@@ -60,5 +62,21 @@ public class Workout {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Integer getWeight() {
+    return weight;
+  }
+
+  public void setWeight(Integer weight) {
+    this.weight = weight;
   }
 }

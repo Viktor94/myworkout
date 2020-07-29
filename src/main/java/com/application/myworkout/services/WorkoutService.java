@@ -7,4 +7,8 @@ import java.util.List;
 public interface WorkoutService {
 
   List<Workout> findWorkoutByUser(User user);
+
+  Workout saveWorkout(Workout workout);
+
+  Workout saveWorkoutPrefixedValues(Workout workout);
 }
