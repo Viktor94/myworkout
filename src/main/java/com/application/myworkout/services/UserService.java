@@ -21,7 +21,7 @@ public interface UserService {
 
   Boolean isUserValidByEmail(String email);
 
-  void addUser(User user);
+  void saveUser(User user);
 
   void validatePlayerLogin(UserLoginDTO dto)
       throws MissingParametersException, NoSuchUserException, WrongPasswordException;

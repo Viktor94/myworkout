@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,11 @@ public class WorkoutServiceImpl implements WorkoutService {
     workout.setDay(getDayStringNew());
     workoutRepository.save(workout);
     return workout;
+  }
+
+  @Override
+  public Optional<Workout> findById(Long id) {
+    return workoutRepository.findById(id);
   }
 
   private String getDayStringNew() {

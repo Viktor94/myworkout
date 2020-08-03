@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
   }
 
   @Override
-  public void addUser(User user) {
+  public void saveUser(User user) {
     userRepository.save(user);
   }
 
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     User user = new User(userRegisterDTO.getUsername(),
         passwordEncoder().encode(userRegisterDTO.getPassword()));
-    addUser(user);
+    saveUser(user);
   }
 
   @Override
