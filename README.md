@@ -1,3 +1,3 @@
 # MyWorkout
 
-MyWorkout is an application that let's you track you'r progress in the gym.
+MyWorkout is an application that let's you track your progress in the gym.
