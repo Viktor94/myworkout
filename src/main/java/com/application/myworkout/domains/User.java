@@ -23,6 +23,9 @@ public class User {
   @OneToMany(mappedBy = "user")
   private List<Workout> workouts;
 
+  @OneToMany(mappedBy = "user")
+  private List<Exercise> exercises;
+
   public User() {
   }
 

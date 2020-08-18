@@ -3,15 +3,19 @@ package com.application.myworkout.domains;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ErrorMessage {
+public class Message {
 
   private String status;
   private String message;
 
-  public ErrorMessage() {
+  public Message() {
   }
 
-  public ErrorMessage(String status, String message) {
+  public Message(String message) {
+    this.message = message;
+  }
+
+  public Message(String status, String message) {
     this.status = status;
     this.message = message;
   }

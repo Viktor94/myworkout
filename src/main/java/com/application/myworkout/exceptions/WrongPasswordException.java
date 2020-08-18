@@ -1,11 +1,11 @@
 package com.application.myworkout.exceptions;
 
-import com.application.myworkout.domains.ErrorMessage;
+import com.application.myworkout.domains.Message;
 
 public class WrongPasswordException extends LoginException {
 
   @Override
-  public ErrorMessage getErrorMessage() {
-    return new ErrorMessage("error", "Wrong password!");
+  public Message getErrorMessage() {
+    return new Message("error", "Wrong password!");
   }
 }

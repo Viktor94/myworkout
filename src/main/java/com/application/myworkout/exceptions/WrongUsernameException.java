@@ -1,6 +1,6 @@
 package com.application.myworkout.exceptions;
 
-import com.application.myworkout.domains.ErrorMessage;
+import com.application.myworkout.domains.Message;
 
 public class WrongUsernameException extends RegisterException {
 
@@ -11,7 +11,7 @@ public class WrongUsernameException extends RegisterException {
   }
 
   @Override
-  public ErrorMessage getErrorMessage() {
-    return new ErrorMessage("error", parameters);
+  public Message getErrorMessage() {
+    return new Message("error", parameters);
   }
 }

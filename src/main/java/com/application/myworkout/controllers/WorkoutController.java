@@ -1,13 +1,18 @@
 package com.application.myworkout.controllers;
 
+import com.application.myworkout.domains.Message;
 import com.application.myworkout.domains.User;
 import com.application.myworkout.domains.Workout;
-import com.application.myworkout.interceptors.ExtractUserInterceptor;
+import com.application.myworkout.domains.dtos.WorkoutDTO;
 import com.application.myworkout.services.UserService;
 import com.application.myworkout.services.WorkoutService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,14 +24,11 @@ public class WorkoutController {
 
   private final UserService userService;
   private final WorkoutService workoutService;
-  private final ExtractUserInterceptor extractUserInterceptor;
 
   @Autowired
-  public WorkoutController(UserService userService, WorkoutService workoutService,
-      ExtractUserInterceptor extractUserInterceptor) {
+  public WorkoutController(UserService userService, WorkoutService workoutService) {
     this.userService = userService;
     this.workoutService = workoutService;
-    this.extractUserInterceptor = extractUserInterceptor;
   }
 
   @PostMapping("/add")
@@ -35,11 +37,34 @@ public class WorkoutController {
     if (workout == null) {
       return ResponseEntity.badRequest().build();
     }
-
     User user = userService.findUserByEmail(authentication.getName());
     workout.setUser(user);
     workoutService.saveWorkout(workout);
+    workoutService.saveWorkoutPrefixedValues(workout);
+    WorkoutDTO workoutDTO = new WorkoutDTO(workout);
 
-    return ResponseEntity.ok(workoutService.saveWorkoutPrefixedValues(workout));
+    return ResponseEntity.ok(workoutDTO);
+  }
+
+  @GetMapping("/workouts")
+  public ResponseEntity<?> getUserWorkouts(Authentication authentication) {
+    User user = userService.findUserByEmail(authentication.getName());
+    List<WorkoutDTO> workoutDTOS = new ArrayList<>();
+    List<Workout> workouts = workoutService.findWorkoutByUser(user);
+
+    for (Workout workout : workouts) {
+      workoutDTOS.add(new WorkoutDTO(workout));
+    }
+    return ResponseEntity.ok(workoutDTOS);
+  }
+
+  @PostMapping("/delete/{id}")
+  public ResponseEntity<?> deleteWorkout(@PathVariable Long id) {
+    if (id == null) {
+      return ResponseEntity.badRequest().build();
+    }
+    workoutService.deleteWorkoutById(id);
+
+    return ResponseEntity.ok(new Message("Workout deleted successfully!"));
   }
 }

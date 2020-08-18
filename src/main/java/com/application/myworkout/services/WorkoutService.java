@@ -9,9 +9,11 @@ public interface WorkoutService {
 
   List<Workout> findWorkoutByUser(User user);
 
-  Workout saveWorkout(Workout workout);
+  void saveWorkout(Workout workout);
 
-  Workout saveWorkoutPrefixedValues(Workout workout);
+  void saveWorkoutPrefixedValues(Workout workout);
 
   Optional<Workout> findById(Long id);
+
+  void deleteWorkoutById(Long id);
 }

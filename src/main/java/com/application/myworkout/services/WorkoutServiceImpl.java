@@ -28,21 +28,24 @@ public class WorkoutServiceImpl implements WorkoutService {
   }
 
   @Override
-  public Workout saveWorkout(Workout workout) {
+  public void saveWorkout(Workout workout) {
     workoutRepository.save(workout);
-    return workout;
   }
 
   @Override
-  public Workout saveWorkoutPrefixedValues(Workout workout) {
+  public void saveWorkoutPrefixedValues(Workout workout) {
     workout.setDay(getDayStringNew());
     workoutRepository.save(workout);
-    return workout;
   }
 
   @Override
   public Optional<Workout> findById(Long id) {
     return workoutRepository.findById(id);
+  }
+
+  @Override
+  public void deleteWorkoutById(Long id) {
+    workoutRepository.delete(workoutRepository.findById(id).get());
   }
 
   private String getDayStringNew() {

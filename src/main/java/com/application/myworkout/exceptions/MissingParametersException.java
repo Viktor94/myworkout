@@ -1,6 +1,6 @@
 package com.application.myworkout.exceptions;
 
-import com.application.myworkout.domains.ErrorMessage;
+import com.application.myworkout.domains.Message;
 import com.application.myworkout.domains.dtos.UserLoginDTO;
 import java.util.List;
 
@@ -13,8 +13,8 @@ public class MissingParametersException extends LoginException {
   }
 
   @Override
-  public ErrorMessage getErrorMessage() {
-    return new ErrorMessage("error", buildMessage());
+  public Message getErrorMessage() {
+    return new Message("error", buildMessage());
   }
 
   public String buildMessage() {

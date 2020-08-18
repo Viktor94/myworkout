@@ -1,6 +1,6 @@
 package com.application.myworkout.exceptions;
 
-import com.application.myworkout.domains.ErrorMessage;
+import com.application.myworkout.domains.Message;
 import java.util.List;
 
 public class MissingFieldException extends RegisterException {
@@ -12,8 +12,8 @@ public class MissingFieldException extends RegisterException {
   }
 
   @Override
-  public ErrorMessage getErrorMessage() {
-    return new ErrorMessage("error", buildMessage());
+  public Message getErrorMessage() {
+    return new Message("error", buildMessage());
   }
 
   public String buildMessage() {

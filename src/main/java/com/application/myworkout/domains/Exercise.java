@@ -6,11 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Exercise {
 
   @Id
@@ -23,12 +25,6 @@ public class Exercise {
   @ManyToOne
   private Workout workout;
 
-  public Exercise() {
-  }
-
-  public Exercise(String exercise, Integer repetitions, Double weight) {
-    this.exercise = exercise;
-    this.repetitions = repetitions;
-    this.weight = weight;
-  }
+  @ManyToOne
+  private User user;
 }

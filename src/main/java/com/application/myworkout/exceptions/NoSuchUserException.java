@@ -1,6 +1,6 @@
 package com.application.myworkout.exceptions;
 
-import com.application.myworkout.domains.ErrorMessage;
+import com.application.myworkout.domains.Message;
 import com.application.myworkout.domains.dtos.UserLoginDTO;
 
 public class NoSuchUserException extends LoginException {
@@ -12,7 +12,7 @@ public class NoSuchUserException extends LoginException {
   }
 
   @Override
-  public ErrorMessage getErrorMessage() {
-    return new ErrorMessage("error", "No such user: " + this.username + "!");
+  public Message getErrorMessage() {
+    return new Message("error", "No such user: " + this.username + "!");
   }
 }
