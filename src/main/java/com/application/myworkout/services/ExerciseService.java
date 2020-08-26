@@ -13,4 +13,6 @@ public interface ExerciseService {
   Exercise findExerciseById(Long id);
 
   void deleteExercise(Exercise exercise);
+
+  void deleteExerciseById(Long id);
 }

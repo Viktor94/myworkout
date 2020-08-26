@@ -1,5 +1,6 @@
 package com.application.myworkout.domains;
 
+import com.sun.istack.NotNull;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

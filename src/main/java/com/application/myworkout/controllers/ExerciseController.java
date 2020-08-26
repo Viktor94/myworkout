@@ -11,14 +11,16 @@ import com.application.myworkout.services.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/exercise")
 public class ExerciseController {
 
@@ -35,9 +37,14 @@ public class ExerciseController {
   }
 
   @PostMapping("/add/{id}")
-  public ResponseEntity<?> postExercise(@RequestBody Exercise exercise, @PathVariable Long id) {
+  public ResponseEntity<?> postExercise(@RequestBody Exercise exercise, @PathVariable Long id,
+      Authentication authentication) {
+    if (id == null || workoutService.findById(id).isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
     Workout workout = workoutService.findById(id).get();
     exercise.setWorkout(workout);
+    exercise.setUser(getUser(authentication));
     exerciseService.saveExercise(exercise);
     ExerciseDTO exerciseDTO = new ExerciseDTO(exercise);
 
@@ -46,12 +53,10 @@ public class ExerciseController {
 
   @GetMapping("/exercises")
   public ResponseEntity<?> listExercises(Authentication authentication) {
-    User user = userService.findUserByEmail(authentication.getName());
-
-    return ResponseEntity.ok(exerciseService.listOfExercises(user));
+    return ResponseEntity.ok(exerciseService.listOfExercises(getUser(authentication)));
   }
 
-  @PostMapping("/delete/{id}")
+  @DeleteMapping("/delete/{id}")
   public ResponseEntity<?> deleteExercise(@PathVariable Long id) {
     if (id == null) {
       return ResponseEntity.badRequest().build();
@@ -59,5 +64,20 @@ public class ExerciseController {
     exerciseService.deleteExercise(exerciseService.findExerciseById(id));
 
     return ResponseEntity.ok(new Message("Exercise deleted successfully!"));
+  }
+
+  private User getUser(Authentication authentication) {
+    return userService.findUserByEmail(authentication.getName());
+  }
+
+  @PutMapping("/edit/{id}")
+  public ResponseEntity<?> editExercise(@RequestBody Exercise exercise, @PathVariable Long id) {
+    if (id == null) {
+      return ResponseEntity.badRequest().build();
+    }
+    exerciseService.deleteExerciseById(id);
+    exerciseService.saveExercise(exercise);
+
+    return ResponseEntity.ok(new Message("Workout has been modified successfully!"));
   }
 }

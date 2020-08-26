@@ -32,8 +32,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(
-      @RequestBody(required = false) UserRegisterDTO userRegisterDTO)
+  public ResponseEntity<?> register(@RequestBody(required = false) UserRegisterDTO userRegisterDTO)
       throws WrongUsernameException, MissingFieldException {
 
     userService.checkUserRegisterDTO(userRegisterDTO);
